@@ -1,0 +1,14 @@
+{
+  "name": "com.tomicz.arframework",
+  "version": "0.0.1",
+  "displayName": "AR Framework",
+  "description": "Install AR working environment in seconds.",
+  "dependencies": {
+    "com.[company-name].some-package": "1.0.0",
+    "com.[company-name].other-package": "2.0.0"
+ },
+  "author": {
+    "name": "Darko Tomic",
+    "email": "tomiczdarko@egmail.com",
+  }
+}

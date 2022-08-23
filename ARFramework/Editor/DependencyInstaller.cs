@@ -14,7 +14,7 @@ namespace TOMICZ.AR
         [MenuItem("Tomicz/AR Framework/Install")]
         private static void Install()
         {
-            CreateFolder("Assets/ARFramework", "Rendering");
+            CreateFolder("Assets", "Rendering");
             CreateURPDependencies();
         }
 
@@ -39,12 +39,12 @@ namespace TOMICZ.AR
 
             if (AssetExists(_universalRenderPipelineAsset))
             {
-                AssetDatabase.CreateAsset(_universalRenderPipelineAsset, "Assets/ARFramework/Rendering/ARURPAsset.asset");
+                AssetDatabase.CreateAsset(_universalRenderPipelineAsset, "Assets/Rendering/ARURPAsset.asset");
             }
 
             if (AssetExists(_universalRendererData))
             {
-                AssetDatabase.CreateAsset(_universalRendererData, "Assets/ARFramework/Rendering/ARURPAssetRenderer.asset");
+                AssetDatabase.CreateAsset(_universalRendererData, "Assets/Rendering/ARURPAssetRenderer.asset");
             }
         }
 
@@ -52,7 +52,7 @@ namespace TOMICZ.AR
         {
             ARBackgroundRendererFeature scriptableRendererFeature = ScriptableObject.CreateInstance<ARBackgroundRendererFeature>();
             scriptableRendererFeature.name = "ARBackgroundRendererFeature";
-            AssetDatabase.CreateAsset(scriptableRendererFeature, "Assets/ARFramework/Rendering/ARBackgroundRendererFeature.asset");
+            AssetDatabase.CreateAsset(scriptableRendererFeature, "Assets/Rendering/ARBackgroundRendererFeature.asset");
 
             if (!universalRendererData.rendererFeatures.Contains(scriptableRendererFeature))
             {

@@ -1,0 +1,14 @@
+{
+    "name": "ARFramework.Runtime",
+    "rootNamespace": "TOMICZ.AR",
+    "references": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
