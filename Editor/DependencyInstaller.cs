@@ -28,6 +28,7 @@ namespace TOMICZ.AR
             CreateARRendererFeature(_universalRendererData);
             ChangeGraphicsRenderPipeline(_universalRenderPipelineAsset);
             InstallARFoundationDependencies();
+            InstallARFoundationScene();
 
             Debug.Log("Successfully installed all dependencies.");
         }
@@ -101,11 +102,6 @@ namespace TOMICZ.AR
 
         private static void InstallARFoundationDependencies()
         {
-            Object.DestroyImmediate(Camera.main?.gameObject);
-            EditorApplication.ExecuteMenuItem("GameObject/XR/AR Session");
-            EditorApplication.ExecuteMenuItem("GameObject/XR/AR Session Origin");
-            EditorSceneManager.SaveOpenScenes();
-
 #if UNITY_IOS
             AssigniOSXRPluginManagmentSettings();
 #endif
@@ -117,11 +113,17 @@ namespace TOMICZ.AR
 
         private static void AssigniOSXRPluginManagmentSettings()
         {
+            PlayerSettings.iOS.targetOSVersionString = "12.0";
+            PlayerSettings.iOS.cameraUsageDescription = "Required for augmented reality support.";
+
             XRGeneralSettingsPerBuildTarget buildTargetSettings = null;
             EditorBuildSettings.TryGetConfigObject(XRGeneralSettings.k_SettingsKey, out buildTargetSettings);
             XRGeneralSettings settings = buildTargetSettings.SettingsForBuildTarget(BuildTargetGroup.iOS);
 
             XRPackageMetadataStore.AssignLoader(settings.Manager, "Unity.XR.ARKit.ARKitLoader", BuildTargetGroup.iOS);
+
+            AssetDatabase.Refresh();
+            AssetDatabase.RefreshSettings();
         }
 
         private static void AssignAndroidXRPluginManagmentSettings()
@@ -130,7 +132,15 @@ namespace TOMICZ.AR
             EditorBuildSettings.TryGetConfigObject(XRGeneralSettings.k_SettingsKey, out buildTargetSettings);
             XRGeneralSettings settings = buildTargetSettings.SettingsForBuildTarget(BuildTargetGroup.Android);
 
-            XRPackageMetadataStore.AssignLoader(settings.Manager, "Unity.XR.ARKit.ARKitLoader", BuildTargetGroup.Android);
+            XRPackageMetadataStore.AssignLoader(settings.Manager, "Unity.XR.ARCore.ARCoreLoader", BuildTargetGroup.Android);
+        }
+
+        private static void InstallARFoundationScene()
+        {
+            Object.DestroyImmediate(Camera.main?.gameObject);
+            EditorApplication.ExecuteMenuItem("GameObject/XR/AR Session");
+            EditorApplication.ExecuteMenuItem("GameObject/XR/AR Session Origin");
+            EditorSceneManager.SaveOpenScenes();
         }
     }
 }
