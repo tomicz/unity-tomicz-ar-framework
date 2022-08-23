@@ -15,11 +15,16 @@ namespace TOMICZ.AR
         private static UniversalRendererData _universalRendererData;
         private static UniversalRenderPipelineAsset _universalRenderPipelineAsset;
 
-        [MenuItem("Tomicz/AR Framework/Install")]
-        private static void Install()
+        [MenuItem("Tomicz")]
+        private static void Refresh()
         {
             AssetDatabase.Refresh();
             AssetDatabase.RefreshSettings();
+        }
+
+        [MenuItem("Tomicz/AR Framework/Install")]
+        private static void Install()
+        {
             CreateFolder("Assets", "Rendering");
             CreateURPDependencies();
         }
