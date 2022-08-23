@@ -26,31 +26,28 @@ namespace TOMICZ.AR
         {
             CreatePiplineAsset();
             CreateARRendererFeature(_universalRendererData);
-            ChangeGraphicsRenderPipeline(_universalRenderPipelineAsset);
             InstallARFoundationDependencies();
             InstallARFoundationScene();
+            ChangeGraphicsRenderPipeline(_universalRenderPipelineAsset);
 
             Debug.Log("Successfully installed all dependencies.");
         }
 
         private static void CreatePiplineAsset()
         {
-            _universalRendererData = ScriptableObject.CreateInstance<UniversalRendererData>();
-            _universalRenderPipelineAsset = UniversalRenderPipelineAsset.Create(_universalRendererData);
-
-            if(_universalRendererData.postProcessData == null)
+            if(_universalRendererData == null)
             {
-                _universalRendererData.postProcessData = GetDefaultPostProcessData();
+                _universalRendererData = ScriptableObject.CreateInstance<UniversalRendererData>();
+                AssetDatabase.CreateAsset(_universalRendererData, "Assets/Rendering/ARURPAssetRenderer.asset");
             }
-
-            if (AssetExists(_universalRenderPipelineAsset))
+            if (_universalRenderPipelineAsset == null)
             {
+                _universalRenderPipelineAsset = UniversalRenderPipelineAsset.Create(_universalRendererData);
                 AssetDatabase.CreateAsset(_universalRenderPipelineAsset, "Assets/Rendering/ARURPAsset.asset");
             }
-
-            if (AssetExists(_universalRendererData))
+            if (_universalRendererData.postProcessData == null)
             {
-                AssetDatabase.CreateAsset(_universalRendererData, "Assets/Rendering/ARURPAssetRenderer.asset");
+                _universalRendererData.postProcessData = GetDefaultPostProcessData();
             }
         }
 
@@ -68,10 +65,14 @@ namespace TOMICZ.AR
 
         private static void ChangeGraphicsRenderPipeline(UniversalRenderPipelineAsset universalRenderPipelineAsset)
         {
-            if(GraphicsSettings.currentRenderPipeline != universalRenderPipelineAsset)
+            if(GraphicsSettings.defaultRenderPipeline == universalRenderPipelineAsset)
             {
-                GraphicsSettings.defaultRenderPipeline = universalRenderPipelineAsset;
+                return;
             }
+
+            GraphicsSettings.defaultRenderPipeline = universalRenderPipelineAsset;
+            QualitySettings.renderPipeline = universalRenderPipelineAsset;
+            AssetDatabase.RefreshSettings();
         }
 
         private static void CreateFolder(string path, string folderName)
