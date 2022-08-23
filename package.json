@@ -4,6 +4,12 @@
     "displayName": "TOMICZ AR Framework",
     "description": "Create AR experiences in seconds.",
     "unity": "2020.1",
+    "dependencies": {
+        "com.unity.xr.arfoundation": "4.2.3",
+        "com.unity.xr.arcore": "4.2.3",
+        "com.unity.xr.arkit-face-tracking": "4.2.3",
+        "com.unity.xr.arkit": "4.2.3"
+    },
     "author": {
         "name": "Darko Tomic",
         "email": "tomiczdarko@gmail.com",
