@@ -1,8 +1,12 @@
 using UnityEditor;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.XR.ARFoundation;
+using UnityEditor.XR.Management;
+using UnityEditor.XR.Management.Metadata;
+using UnityEngine.XR.Management;
 
 namespace TOMICZ.AR
 {
@@ -23,6 +27,7 @@ namespace TOMICZ.AR
             CreatePiplineAsset();
             CreateARRendererFeature(_universalRendererData);
             ChangeGraphicsRenderPipeline(_universalRenderPipelineAsset);
+            InstallARFoundationDependencies();
 
             Debug.Log("Successfully installed all dependencies.");
         }
@@ -92,6 +97,40 @@ namespace TOMICZ.AR
             {
                 return false;
             }
+        }
+
+        private static void InstallARFoundationDependencies()
+        {
+            Object.DestroyImmediate(Camera.main?.gameObject);
+            EditorApplication.ExecuteMenuItem("GameObject/XR/AR Session");
+            EditorApplication.ExecuteMenuItem("GameObject/XR/AR Session Origin");
+            EditorSceneManager.SaveOpenScenes();
+
+#if UNITY_IOS
+            AssigniOSXRPluginManagmentSettings();
+#endif
+
+#if UNITY_ANDROID
+            AssignAndroidXRPluginManagmentSettings();
+#endif
+        }
+
+        private static void AssigniOSXRPluginManagmentSettings()
+        {
+            XRGeneralSettingsPerBuildTarget buildTargetSettings = null;
+            EditorBuildSettings.TryGetConfigObject(XRGeneralSettings.k_SettingsKey, out buildTargetSettings);
+            XRGeneralSettings settings = buildTargetSettings.SettingsForBuildTarget(BuildTargetGroup.iOS);
+
+            XRPackageMetadataStore.AssignLoader(settings.Manager, "Unity.XR.ARKit.ARKitLoader", BuildTargetGroup.iOS);
+        }
+
+        private static void AssignAndroidXRPluginManagmentSettings()
+        {
+            XRGeneralSettingsPerBuildTarget buildTargetSettings = null;
+            EditorBuildSettings.TryGetConfigObject(XRGeneralSettings.k_SettingsKey, out buildTargetSettings);
+            XRGeneralSettings settings = buildTargetSettings.SettingsForBuildTarget(BuildTargetGroup.Android);
+
+            XRPackageMetadataStore.AssignLoader(settings.Manager, "Unity.XR.ARKit.ARKitLoader", BuildTargetGroup.Android);
         }
     }
 }
