@@ -10,17 +10,10 @@ using UnityEngine.XR.Management;
 
 namespace TOMICZ.AR
 {
-    public class DependencyInstaller
+    public static class DependencyInstaller
     {
         private static UniversalRendererData _universalRendererData;
         private static UniversalRenderPipelineAsset _universalRenderPipelineAsset;
-
-        [MenuItem("Tomicz")]
-        private static void Refresh()
-        {
-            AssetDatabase.Refresh();
-            AssetDatabase.RefreshSettings();
-        }
 
         [MenuItem("Tomicz/AR Framework/Install")]
         private static void Install()
