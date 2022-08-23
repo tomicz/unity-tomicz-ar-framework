@@ -137,9 +137,20 @@ namespace TOMICZ.AR
 
         private static void InstallARFoundationScene()
         {
-            Object.DestroyImmediate(Camera.main?.gameObject);
-            EditorApplication.ExecuteMenuItem("GameObject/XR/AR Session");
-            EditorApplication.ExecuteMenuItem("GameObject/XR/AR Session Origin");
+            var session = Object.FindObjectOfType<ARSession>();
+            var sessionOrigin = Object.FindObjectOfType<ARSessionOrigin>();
+
+            if(session == null)
+            {
+                EditorApplication.ExecuteMenuItem("GameObject/XR/AR Session");
+            }
+
+            if(sessionOrigin == null)
+            {
+                Object.DestroyImmediate(Camera.main?.gameObject);
+                EditorApplication.ExecuteMenuItem("GameObject/XR/AR Session Origin");
+            }
+
             EditorSceneManager.SaveOpenScenes();
         }
     }
