@@ -18,6 +18,8 @@ namespace TOMICZ.AR
         [MenuItem("Tomicz/AR Framework/Install")]
         private static void Install()
         {
+            AssetDatabase.Refresh();
+            AssetDatabase.RefreshSettings();
             CreateFolder("Assets", "Rendering");
             CreateURPDependencies();
         }
