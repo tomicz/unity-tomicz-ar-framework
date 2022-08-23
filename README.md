@@ -17,9 +17,8 @@
    * Create a new unity project or open an existing
    * Copy this link https://github.com/tomicz/unity-tomicz-ar-framework.git
    * Open Package Manager in Unity
-   * In the top left corner click + and then select **Add package from git URL...**
-      
-   ![Example image](url "https://imgur.com/lFjInkp")
+   * In the top left corner click + and then select **Add package from git URL...** See example https://imgur.com/lFjInkp
+   * Paste the copied link and click Add 
 
 # Getting started
 
