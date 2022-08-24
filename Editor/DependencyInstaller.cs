@@ -30,7 +30,7 @@ namespace TOMICZ.AR
             InstallARFoundationScene();
             ChangeGraphicsRenderPipeline(_universalRenderPipelineAsset);
 
-            Debug.Log("Successfully installed all dependencies.");
+            Debug.Log("Successfully installed all TOMICZ AR Framework dependencies.");
         }
 
         private static void CreatePiplineAsset()
@@ -117,13 +117,8 @@ namespace TOMICZ.AR
             PlayerSettings.iOS.targetOSVersionString = "12.0";
             PlayerSettings.iOS.cameraUsageDescription = "Required for augmented reality support.";
 
-            XRGeneralSettingsPerBuildTarget buildTargetSettings = null;
-            EditorBuildSettings.TryGetConfigObject(XRGeneralSettings.k_SettingsKey, out buildTargetSettings);
-            XRGeneralSettings settings = buildTargetSettings.SettingsForBuildTarget(BuildTargetGroup.iOS);
-
-            XRPackageMetadataStore.AssignLoader(settings.Manager, "Unity.XR.ARKit.ARKitLoader", BuildTargetGroup.iOS);
-
-            AssetDatabase.Refresh();
+            XRManagerSettings manager = ScriptableObject.CreateInstance<XRManagerSettings>();
+            XRPackageMetadataStore.AssignLoader(manager, "Unity.XR.ARKit.ARKitLoader", BuildTargetGroup.iOS);
             AssetDatabase.RefreshSettings();
         }
 
