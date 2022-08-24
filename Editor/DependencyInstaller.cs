@@ -32,7 +32,7 @@ namespace TOMICZ.AR
             //InstallARFoundationDependencies();
             InstallARFoundationScene();
             ChangeGraphicsRenderPipeline(_universalRenderPipelineAsset);
-            CompilationPipeline.RequestScriptCompilation();
+            //CompilationPipeline.RequestScriptCompilation();
 
             Debug.Log("Successfully installed all TOMICZ AR Framework dependencies.");
         }
@@ -128,7 +128,8 @@ namespace TOMICZ.AR
 
             var iosManager = generalSettingsPerBuildTarget.ManagerSettingsForBuildTarget(BuildTargetGroup.iOS);
             XRPackageMetadataStore.AssignLoader(iosManager, "Unity.XR.ARKit.ARKitLoader", BuildTargetGroup.iOS);
-            AssetDatabase.Refresh();
+            //AssetDatabase.SaveAssets();
+            //AssetDatabase.Refresh();
             AssetDatabase.RefreshSettings();
         }
 
