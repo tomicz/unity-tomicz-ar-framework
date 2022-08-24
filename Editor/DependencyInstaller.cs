@@ -117,7 +117,12 @@ namespace TOMICZ.AR
             PlayerSettings.iOS.targetOSVersionString = "12.0";
             PlayerSettings.iOS.cameraUsageDescription = "Required for augmented reality support.";
 
-            XRManagerSettings manager = ScriptableObject.CreateInstance<XRManagerSettings>();
+            string path = "Assets/XR/XRGeneralSettings.asset";
+            XRManagerSettings manager = AssetDatabase.LoadAssetAtPath<XRManagerSettings>(path);
+
+            Debug.Log($"Path: {path}");
+            Debug.Log($"Manager: {manager}");
+
             XRPackageMetadataStore.AssignLoader(manager, "Unity.XR.ARKit.ARKitLoader", BuildTargetGroup.iOS);
             AssetDatabase.RefreshSettings();
         }
