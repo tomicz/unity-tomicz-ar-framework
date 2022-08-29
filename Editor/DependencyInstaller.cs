@@ -1,5 +1,4 @@
 using UnityEditor;
-using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
@@ -12,7 +11,7 @@ namespace TOMICZ.AR
         private static UniversalRendererData _universalRendererData;
         private static UniversalRenderPipelineAsset _universalRenderPipelineAsset;
 
-        [MenuItem("Tomicz/AR Framework/Install")]
+        [MenuItem("Tomicz/AR Framework/Install", false, 0)]
         private static void Install()
         {
             CreateFolder("Assets", "Rendering");
@@ -23,7 +22,6 @@ namespace TOMICZ.AR
         {
             CreatePiplineAsset();
             CreateARRendererFeature(_universalRendererData);
-            InstallARFoundationScene();
             ChangeGraphicsRenderPipeline(_universalRenderPipelineAsset);
 
             Debug.Log("Successfully installed all TOMICZ AR Framework dependencies.");
@@ -45,6 +43,8 @@ namespace TOMICZ.AR
             {
                 _universalRendererData.postProcessData = GetDefaultPostProcessData();
             }
+
+            Debug.Log("Installed Universal RP dependencies.");
         }
 
         private static void CreateARRendererFeature(UniversalRendererData universalRendererData)
@@ -57,6 +57,8 @@ namespace TOMICZ.AR
             {
                 universalRendererData.rendererFeatures.Add(scriptableRendererFeature);
             }
+
+            Debug.Log("Added ARBackgroundRendererFeature dependency to UniversalRendererData");
         }
 
         private static void ChangeGraphicsRenderPipeline(UniversalRenderPipelineAsset universalRenderPipelineAsset)
@@ -69,6 +71,8 @@ namespace TOMICZ.AR
             GraphicsSettings.defaultRenderPipeline = universalRenderPipelineAsset;
             QualitySettings.renderPipeline = universalRenderPipelineAsset;
             AssetDatabase.RefreshSettings();
+
+            Debug.Log("Changed default renderer pipeline asset in graphics settings.");
         }
 
         private static void CreateFolder(string path, string folderName)
@@ -76,6 +80,7 @@ namespace TOMICZ.AR
             if (!AssetDatabase.IsValidFolder(path + "/" + folderName))
             {
                 AssetDatabase.CreateFolder(path, folderName);
+                Debug.Log($"Created folder at: {path}. Folder name: {folderName}");
             }
         }
 
@@ -83,25 +88,6 @@ namespace TOMICZ.AR
         {
             var path = System.IO.Path.Combine(UniversalRenderPipelineAsset.packagePath, "Runtime/Data/PostProcessData.asset");
             return AssetDatabase.LoadAssetAtPath<PostProcessData>(path);
-        }
-
-        private static void InstallARFoundationScene()
-        {
-            var session = Object.FindObjectOfType<ARSession>();
-            var sessionOrigin = Object.FindObjectOfType<ARSessionOrigin>();
-
-            if(session == null)
-            {
-                EditorApplication.ExecuteMenuItem("GameObject/XR/AR Session");
-            }
-
-            if(sessionOrigin == null)
-            {
-                Object.DestroyImmediate(Camera.main?.gameObject);
-                EditorApplication.ExecuteMenuItem("GameObject/XR/AR Session Origin");
-            }
-
-            EditorSceneManager.SaveOpenScenes();
         }
     }
 }
