@@ -1,8 +1,19 @@
 {
     "name": "ARFramework.Runtime",
     "rootNamespace": "TOMICZ.AR",
-    "references": [],
-    "includePlatforms": [],
+    "references": [
+        "Unity.XR.ARFoundation",
+        "Unity.XR.ARSubsystems"
+    ],
+    "includePlatforms": [
+        "Android",
+        "Editor",
+        "iOS",
+        "macOSStandalone",
+        "WSA",
+        "WindowsStandalone32",
+        "WindowsStandalone64"
+    ],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,
