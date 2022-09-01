@@ -1,6 +1,6 @@
 {
     "name": "com.tomicz.unity-tomicz-ar-framework",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "displayName": "TOMICZ AR Framework",
     "description": "Create AR experiences in seconds.",
     "unity": "2020.1",
