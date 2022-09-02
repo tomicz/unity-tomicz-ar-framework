@@ -31,8 +31,14 @@ namespace TOMICZ.AR
         {
             _planeManager = GetComponent<ARPlaneManager>();
 
-            EnableManager(_planeManager, _groundTracking);
-            EnableManager(_planeManager, _wallTracking);
+            if(_groundTracking || _wallTracking)
+            {
+                EnableManager(_planeManager, true);
+            }
+            else
+            {
+                EnableManager(_planeManager, false);
+            }
         }
 
         private void EnableManager(MonoBehaviour manager, bool value)
